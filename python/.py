@@ -1,2 +1,0 @@
-print('Ok')
-print('OK')
