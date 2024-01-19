@@ -14,6 +14,6 @@ Acredito que mesmo nesta fase já podemos encontrar alguns Insights.
 #
 <details>
   <summary>Insights • Todas as métricas encontadas</summary>
-#
+  - .
   - La percentuale di donne che hanno avuto figli prima dei diciotto anni
 </details>
