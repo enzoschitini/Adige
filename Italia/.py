@@ -1,0 +1,60 @@
+import pandas as pd
+ANNO = 2023
+
+df = pd.read_csv('Data.csv')
+
+# Creazione della colonna livelli 
+def livello(valore):
+    valore = list(valore)
+    valore = f' {valore[1]}{valore[2]}'
+    return valore
+
+df[' Livello'] = df[' Slide'].apply(livello)
+
+# Modello per la traduzione
+
+# Giorni della sttimana
+mapping_day = {"Monday": "Lunedì", 
+           "Tuesday": "Martedì", 
+           "Wednesday": "Mercoledì",
+           "Thursday": "Giovedì",
+           "Friday": "Venerdì",
+           "Saturday": "Sabato",
+           "Sunday": "Domenica"}
+
+# Mesi dell'anno
+mapping_month = {"January": "Gennaio",
+                 "February": "Febbraio",
+                 "March": "Marzo",
+                 "April": "Abrile",
+                 "May": "Maggio", 
+                 "June": "Giugno", 
+                 "July": "Luglio",
+                 "August": "Agosto",
+                 "September": "Settembre",
+                 "October": "Ottobre",
+                 "November": "Novembre",
+                 "December": "Dicembre"}
+
+# Trasformazione delle date (2205 -> 22-05)
+df[' Data'] = df[' Data'].astype(str)
+df[' Data'] = df[' Data'].str.zfill(4).str.replace(r'^(\d{2})(\d{2})$', r'\1-\2', regex=True)
+
+# Leggend le date per aggiungere l'anno che è stato impostato
+df[' Data'] = pd.to_datetime(df[' Data'].astype(str), format='%d-%m').dt.strftime('%d-%m-2023')
+
+# Creando la colonna dei "Giorni della settimana" e i "Mesi" in base alla colonna "Data"
+df[' Giorno della settimana'] = pd.to_datetime(df[' Data']).dt.day_name()
+df[' Mese'] = pd.to_datetime(df[' Data']).dt.month_name()
+df[' Anno'] = ANNO
+
+# Applicando il modello per la traduzione
+df[" Giorno della settimana"] = df[" Giorno della settimana"].replace(mapping_day)
+df[" Mese"] = df[" Mese"].replace(mapping_month)
+
+df = df.rename(columns={' Slide':' Lezione'})
+
+df = df[['Ora', ' Data', ' Lezione', ' Professoressa', ' Livello',
+       ' Giorno della settimana', ' Mese', ' Anno']]
+
+# Creato da Enzo Schitini
