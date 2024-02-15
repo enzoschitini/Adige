@@ -1,0 +1,6 @@
+import pandas as pd
+from adige import guida, dati_nulli
+
+df = pd.read_csv()
+
+guida(df)
